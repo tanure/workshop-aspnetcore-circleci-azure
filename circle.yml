@@ -19,9 +19,9 @@ database:
 
 test:
     pre:
-        - dotnet build test/project.json
+        - dotnet build test
     override:
-        - dotnet test test/project.json
+        - dotnet test test
     post:
         - dotnet publish --configuration Release aspnetcore/project.json
         - cp -R aspnetcore/bin/Release/netcoreapp1.1/ $CIRCLE_ARTIFACTS/
