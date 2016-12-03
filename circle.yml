@@ -4,19 +4,18 @@ machine:
     environment:
         ConnectionStrings__DefaultConnection: "Server=localhost;database=WorkshopAspcore_Test;user id=sa;password=@st2015net;MultiActiveResultSets=True"
     post:
-         - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+        - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
         - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
         - sudo apt-get update
         - sudo apt-get install dotnet-dev-1.0.0-preview2.1-003177
+        
 dependencies:
     override:
         - dotnet restore
-
 database:
     override:
         - docker run -d -p 1433:1433 -e SA_PASSWORD=@st2015net -e ACCEPT_EULA=Y --name mssq-microsoft/mssql-server-linux
         - docker inspect mssql
-
 test:
     pre:
         - dotnet build test
